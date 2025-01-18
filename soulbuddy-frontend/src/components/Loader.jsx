@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaSpinner } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const Loader = ({ isLoading }) => {
   const messages = [
@@ -12,18 +13,23 @@ const Loader = ({ isLoading }) => {
   ];
 
   const [currentMessage, setCurrentMessage] = useState(messages[0]);
+  const navigate = useNavigate();  // Initialize useNavigate for redirection
 
   useEffect(() => {
     let messageInterval;
-
     if (isLoading) {
       messageInterval = setInterval(() => {
         setCurrentMessage(messages[Math.floor(Math.random() * messages.length)]);
       }, 2000);
+      setTimeout(() => {
+        navigate('/kundli'); // Redirect to the Kundli page
+      }, 5000); // Adjust the delay based on your loading time
     }
 
-    return () => clearInterval(messageInterval);
-  }, [isLoading, messages]);
+    return () => {
+      clearInterval(messageInterval);
+    };
+  }, [isLoading, messages, navigate]);
 
   if (!isLoading) return null;
 
