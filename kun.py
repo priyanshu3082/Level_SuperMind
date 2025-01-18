@@ -1,52 +1,55 @@
 import matplotlib.pyplot as plt
-import numpy as np
+from matplotlib.patches import Polygon
 
-# Define the zodiac signs and house placements
-zodiac_signs = [
-    "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
-    "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"
-]
+# Define house labels
+house_labels = {1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI",
+                7: "VII", 8: "VIII", 9: "IX", 10: "X", 11: "XI", 12: "XII"}
 
-# Example planetary positions (House assignments from Step 5)
+# Example planetary positions (House assignments)
 planets_in_houses = {
-    "Sun": 9, "Moon": 2, "Mercury": 9, "Venus": 10, "Mars": 11,
-    "Jupiter": 4, "Saturn": 3, "Uranus": 12, "Neptune": 11, "Pluto": 10
+    "Sun": 1, "Moon": 2, "Mercury": 3, "Venus": 4, "Mars": 5,
+    "Jupiter": 7, "Saturn": 9, "Rahu": 11, "Ketu": 6
 }
 
-# Create a circular chart
-fig, ax = plt.subplots(figsize=(8, 8))
-ax.set_xlim(-1, 1)
-ax.set_ylim(-1, 1)
+# Function to create a square Kundli chart
+def plot_kundli(house_labels, planets_in_houses):
+    # Set up the plot
+    fig, ax = plt.subplots(figsize=(8, 8))
+    ax.set_xlim(-1, 1)
+    ax.set_ylim(-1, 1)
+    ax.axis('off')
 
-# Draw the circle
-circle = plt.Circle((0, 0), 1, color='black', fill=False, linewidth=2)
-ax.add_patch(circle)
+    # Define the key points for the diamond layout
+    diamond_points = {
+        1: (0, 0.6), 2: (0.3, 0.3), 3: (0.6, 0), 4: (0.3, -0.3),
+        5: (0, -0.6), 6: (-0.3, -0.3), 7: (-0.6, 0), 8: (-0.3, 0.3),
+        9: (0.6, 0.6), 10: (0.6, -0.6), 11: (-0.6, -0.6), 12: (-0.6, 0.6)
+    }
 
-# Draw 12 equal sections for zodiac signs
-for i in range(12):
-    angle = i * (360 / 12)
-    x = np.cos(np.radians(angle))
-    y = np.sin(np.radians(angle))
-    ax.plot([0, x], [0, y], color="black", linewidth=2)
+    # Connect points to form houses
+    lines = [
+        [diamond_points[1], diamond_points[9], diamond_points[3], diamond_points[10], diamond_points[1]],  # Top
+        [diamond_points[5], diamond_points[10], diamond_points[7], diamond_points[11], diamond_points[5]],  # Bottom
+        [diamond_points[1], diamond_points[8], diamond_points[7], diamond_points[12], diamond_points[1]],  # Left
+        [diamond_points[3], diamond_points[9], diamond_points[11], diamond_points[6], diamond_points[3]],  # Right
+    ]
 
-# Place zodiac labels
-for i, sign in enumerate(zodiac_signs):
-    angle = (i + 0.5) * (360 / 12)  # Midpoint of each section
-    x = 0.75 * np.cos(np.radians(angle))
-    y = 0.75 * np.sin(np.radians(angle))
-    ax.text(x, y, sign, fontsize=10, ha='center', va='center', fontweight='bold')
+    # Draw the diamond shapes for the grid
+    for line in lines:
+        poly = Polygon(line, closed=True, edgecolor='black', fill=None, linewidth=2)
+        ax.add_patch(poly)
 
-# Place planets in their houses
-for planet, house in planets_in_houses.items():
-    angle = (house - 1) * (360 / 12) + 15  # Adjust to position planets within sections
-    x = 0.5 * np.cos(np.radians(angle))
-    y = 0.5 * np.sin(np.radians(angle))
-    ax.text(x, y, planet, fontsize=12, ha='center', va='center', color="red")
+    # Add house numbers to the chart
+    for house, pos in diamond_points.items():
+        ax.text(pos[0], pos[1], house_labels.get(house, ""), fontsize=12, ha="center", va="center", fontweight="bold")
 
-# Hide axes
-ax.set_xticks([])
-ax.set_yticks([])
-ax.axis("off")
+    # Add planets in their respective houses
+    for planet, house in planets_in_houses.items():
+        pos = diamond_points[house]
+        ax.text(pos[0], pos[1] - 0.05, planet, fontsize=10, ha="center", va="center", color="red")
 
-plt.title("Birth Chart (Kundali)")
-plt.show()
+    plt.title("Vedic Kundli Chart", fontsize=16, fontweight="bold")
+    plt.show()
+
+# Plot the Kundli
+plot_kundli(house_labels, planets_in_houses)
