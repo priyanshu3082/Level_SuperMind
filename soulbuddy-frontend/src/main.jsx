@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
 
-const root = document.documentElement; // Select <html>
-root.classList.add('dark'); // Apply dark mode
+const root = document.documentElement;
+root.classList.add('dark');
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

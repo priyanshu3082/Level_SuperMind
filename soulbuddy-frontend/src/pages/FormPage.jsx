@@ -9,7 +9,7 @@ const FormPage = () => {
     name: '',
     dateOfBirth: '',
     timeOfBirth: '',
-    gender: 'male',
+    gender: "",
     state: '',
     city: '',
   });
@@ -119,6 +119,48 @@ const FormPage = () => {
                     </div>
                   </div>
                 </div>
+
+                {/* Gender */}
+              <div>
+                <label className="block text-lg font-semibold">Gender</label>
+                <div className="flex items-center space-x-6 mt-2">
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      id="male"
+                      name="gender"
+                      value="Male"
+                      onChange={handleChange}
+                      checked={formData.gender === "Male"}
+                    />
+                    <label htmlFor="male" className="text-lg">Male</label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      id="female"
+                      name="gender"
+                      value="Female"
+                      onChange={handleChange}
+                      checked={formData.gender === "Female"}
+                    />
+                    <label htmlFor="female" className="text-lg">Female</label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      id="other"
+                      name="gender"
+                      value="Other"
+                      onChange={handleChange}
+                      checked={formData.gender === "Other"}
+                    />
+                    <label htmlFor="other" className="text-lg">Other</label>
+                  </div>
+                </div>
+              </div>
+
+
 {/* State & City */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>

@@ -1,14 +1,14 @@
 import React from "react";
 import { FaGem, FaRegStar, FaRegCommentDots } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
-import '@fontsource/poppins'; // Using Poppins font
+import { useNavigate } from "react-router-dom"; 
+import '@fontsource/poppins'; 
 
 const LandingPage = () => {
-  const navigate = useNavigate(); // Initialize the navigate function
+  const navigate = useNavigate(); 
 
   const handleGetStartedClick = () => {
-    navigate("/form"); // Navigate to the FormPage
+    navigate("/form"); 
   };
 
   return (
@@ -101,7 +101,7 @@ const LandingPage = () => {
               className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform transition-all mt-6"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={handleGetStartedClick} // Add the onClick handler to redirect
+              onClick={handleGetStartedClick} 
             >
               Get Started
             </motion.button>
