@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { FaUser, FaCalendarAlt, FaClock, FaMapMarkerAlt } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import Loader from '../components/Loader';
@@ -9,7 +10,7 @@ const FormPage = () => {
     name: '',
     dateOfBirth: '',
     timeOfBirth: '',
-    gender: "",
+    gender: '',
     state: '',
     city: '',
   });
@@ -28,11 +29,11 @@ const FormPage = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 5000));
-      console.log('Form submitted:', formData);
+      const response = await axios.post('http://localhost:5000/api/user_details', formData);
+      alert(response.data.message);
     } catch (error) {
       console.error('Error submitting form:', error);
+      alert('Error: ' + error.response.data.error);
     } finally {
       setIsLoading(false);
     }
@@ -119,48 +120,6 @@ const FormPage = () => {
                     </div>
                   </div>
                 </div>
-
-                {/* Gender */}
-              <div>
-                <label className="block text-lg font-semibold">Gender</label>
-                <div className="flex items-center space-x-6 mt-2">
-                  <div className="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      id="male"
-                      name="gender"
-                      value="Male"
-                      onChange={handleChange}
-                      checked={formData.gender === "Male"}
-                    />
-                    <label htmlFor="male" className="text-lg">Male</label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      id="female"
-                      name="gender"
-                      value="Female"
-                      onChange={handleChange}
-                      checked={formData.gender === "Female"}
-                    />
-                    <label htmlFor="female" className="text-lg">Female</label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      id="other"
-                      name="gender"
-                      value="Other"
-                      onChange={handleChange}
-                      checked={formData.gender === "Other"}
-                    />
-                    <label htmlFor="other" className="text-lg">Other</label>
-                  </div>
-                </div>
-              </div>
-
-
 {/* State & City */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -180,28 +139,6 @@ const FormPage = () => {
                       <option value="Andhra Pradesh">Andhra Pradesh</option>
                       <option value="Arunachal Pradesh">Arunachal Pradesh</option>
                       <option value="Assam">Assam</option>
-                      <option value="Bihar">Bihar</option>
-                      <option value="Chhattisgarh">Chhattisgarh</option>
-                      <option value="Goa">Goa</option>
-                      <option value="Gujarat">Gujarat</option>
-                      <option value="Haryana">Haryana</option>
-                      <option value="Himachal Pradesh">Himachal Pradesh</option>
-                      <option value="Jharkhand">Jharkhand</option>
-                      <option value="Karnataka">Karnataka</option>
-                      <option value="Kerala">Kerala</option>
-                      <option value="Madhya Pradesh">Madhya Pradesh</option>
-                      <option value="Maharashtra">Maharashtra</option>
-                      <option value="Manipur">Manipur</option>
-                      <option value="Meghalaya">Meghalaya</option>
-                      <option value="Mizoram">Mizoram</option>
-                      <option value="Nagaland">Nagaland</option>
-                      <option value="Odisha">Odisha</option>
-                      <option value="Punjab">Punjab</option>
-                      <option value="Rajasthan">Rajasthan</option>
-                      <option value="Sikkim">Sikkim</option>
-                      <option value="Tamil Nadu">Tamil Nadu</option>
-                      <option value="Telangana">Telangana</option>
-                      <option value="Tripura">Tripura</option>
                       <option value="Uttar Pradesh">Uttar Pradesh</option>
                       <option value="Uttarakhand">Uttarakhand</option>
                       <option value="West Bengal">West Bengal</option>
@@ -223,11 +160,6 @@ const FormPage = () => {
                     >
                       <option value="">Select your city</option>
                       {/* Add city options here based on the selected state */}
-                    <option value="Ahmedabad">Ahmedabad</option>
-                    <option value="Bengaluru">Bengaluru</option>
-                    <option value="Chennai">Chennai</option>
-                    <option value="Delhi">Delhi</option>
-                    <option value="Hyderabad">Hyderabad</option>
                     <option value="Kolkata">Kolkata</option>
                     <option value="Mumbai">Mumbai</option>
                     <option value="Pune">Pune</option>
